@@ -1,0 +1,1 @@
+export const getPokemonList = () => fetch("https://pokeapi.co/api/v2/pokemon/")

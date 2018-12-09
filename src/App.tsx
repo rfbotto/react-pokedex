@@ -1,5 +1,7 @@
-import React, { Component } from 'react';
-import PokemonList from './components/PokemonList';
+import React, { Component, lazy } from 'react';
+import ErrorBoundary from './components/ErrorBoundary';
+
+const PokemonListWrapper = lazy(() => import('./components/PokemonListWrapper'));
 
 class App extends Component {
   render() {
@@ -13,9 +15,11 @@ class App extends Component {
             React Christmas Advent
         </h1>
         </div>
-        <React.Suspense fallback={<div>loading pokemon collection...</div>}>
-          <PokemonList />
-        </React.Suspense>
+        <ErrorBoundary>
+          <React.Suspense fallback={<div>loading pokemon list...</div>}>
+            <PokemonListWrapper />
+          </React.Suspense>
+        </ErrorBoundary>
       </>
     );
   }

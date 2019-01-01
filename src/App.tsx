@@ -1,7 +1,7 @@
 import React, { Component, lazy } from 'react';
 import ErrorBoundary from './components/ErrorBoundary';
 
-const PokemonListWrapper = lazy(() => import('./components/PokemonListWrapper'));
+const Pokedex = lazy(() => import('./components/Pokedex'));
 
 class App extends Component {
   render() {
@@ -17,7 +17,7 @@ class App extends Component {
         </div>
         <ErrorBoundary>
           <React.Suspense fallback={<div>loading pokemon list...</div>}>
-            <PokemonListWrapper />
+            <Pokedex />
           </React.Suspense>
         </ErrorBoundary>
       </>

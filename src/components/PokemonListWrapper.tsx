@@ -1,12 +1,12 @@
-import React, { useEffect, useState, lazy } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { getPokemonList } from '../api/getPokemonList';
-import { PokemonList as PL } from '../types/Pokemon';
-
-const PokemonList = lazy(() => import('./PokemonList'))
+import { PokemonList as PL, PokedexContext as PContext } from '../types/Pokemon';
+import PokemonList from './PokemonList';
+import { PokedexContext } from './Pokedex';
 
 const PokemonListWrapper: React.SFC = () => {
-    const initialState: PL = { count: 0, results: [] }
-    const [pokemonList, setPokemonList] = useState(initialState)
+    const [pokemonList, setPokemonList] = useState({ results: [] } as PL)
+    const { setSelectedPokemonId } = useContext(PokedexContext) as PContext
 
     const fetchData = async () => {
         const response = await getPokemonList()
@@ -18,8 +18,9 @@ const PokemonListWrapper: React.SFC = () => {
         fetchData()
     }, []);
 
-    return <PokemonList pokemons={pokemonList.results} />
+    return (
+        <PokemonList pokemons={pokemonList.results} onPokemonClick={(id: number) => setSelectedPokemonId(id)} />
+    )
 }
-
 
 export default PokemonListWrapper

@@ -4,6 +4,9 @@ export interface Pokemon {
 }
 
 export interface PokemonList {
-    count: number
     results: Array<Pokemon>
+}
+
+export interface PokedexContext {
+    setSelectedPokemonId: (id: number) => void
 }

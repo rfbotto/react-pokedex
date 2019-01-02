@@ -8,7 +8,7 @@ const Pokedex: React.SFC = () => {
 
     return (
         <PokedexContext.Provider value={{ setSelectedPokemonId }}>
-            {selectedPokemonId > 0 && <h3>Selected Pokemon: {selectedPokemonId}</h3>}
+            <h3 style={{ textAlign: 'center' }}>Selected Pokemon ID: {selectedPokemonId > 0 ? selectedPokemonId : 'None'}</h3>
             <PokemonListWrapper />
         </PokedexContext.Provider>
     )

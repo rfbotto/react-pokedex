@@ -2,7 +2,7 @@ import React from 'react'
 import { Pokemon as PokemonType } from '../types/Pokemon';
 import PokemonListElement from './PokemonListElement';
 import Grid from '@material-ui/core/Grid';
-import { withStyles, Paper } from '@material-ui/core';
+import { withStyles, Paper, Theme } from '@material-ui/core';
 import { Classes } from 'jss';
 import LazyLoad from 'react-lazyload';
 
@@ -11,10 +11,13 @@ interface Props {
     classes: Classes
 }
 
-const styles = () => ({
+const styles = (theme: Theme) => ({
     paper: {
         height: 200,
         width: 250,
+        margin: theme.spacing.unit,
+        padding: theme.spacing.unit * 2,
+        textAlign: 'center',
     },
 })
 
@@ -36,4 +39,5 @@ const PokemonList: React.FC<Props> = ({ pokemons, classes }) => (
     </Grid>
 )
 
+//@ts-ignore
 export default withStyles(styles)(PokemonList)

@@ -6,7 +6,7 @@ class App extends Component {
   render() {
     return (
       <>
-        <div>
+        <div style={{ textAlign: 'center' }}>
           <h1>
             <span role="img" aria-label="React Christmas Advent">
               ✡️🎄✌

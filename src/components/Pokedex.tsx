@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import PokemonListWrapper from './PokemonListWrapper';
+import PokemonListWrapper from './PokemonListWrapper'
 
 export const PokedexContext = React.createContext({})
 

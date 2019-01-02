@@ -1,23 +1,39 @@
 import React from 'react'
-import { Pokemon } from '../types/Pokemon';
+import { Pokemon as PokemonType } from '../types/Pokemon';
+import PokemonListElement from './PokemonListElement';
+import Grid from '@material-ui/core/Grid';
+import { withStyles, Paper } from '@material-ui/core';
+import { Classes } from 'jss';
+import LazyLoad from 'react-lazyload';
 
 interface Props {
-    pokemons: Array<Pokemon>
-    onPokemonClick: (id: number) => void
+    pokemons: Array<PokemonType>
+    classes: Classes
 }
 
-const PokemonList: React.SFC<Props> = ({ pokemons, onPokemonClick }) => (
-    <div>
-        <h2>Pokemon List</h2>
-        <ul>
-            {pokemons.map(
-                pokemon => {
-                    const pokemonId = parseInt(pokemon.url.split('/')[6])
-                    return <li key={pokemonId} onClick={() => onPokemonClick(pokemonId)}>{pokemon.name}</li>
-                }
-            )}
-        </ul>
-    </div>
+const styles = () => ({
+    paper: {
+        height: 200,
+        width: 250,
+    },
+})
+
+const PokemonList: React.FC<Props> = ({ pokemons, classes }) => (
+    <Grid container spacing={16}>
+        <Grid item xs={12}>
+            <Grid container justify="center" spacing={16}>
+                {pokemons.map(
+                    pokemon => (
+                        <Paper key={pokemon.name} className={classes.paper}>
+                            <LazyLoad height={200}>
+                                <PokemonListElement pokemon={pokemon} />
+                            </LazyLoad>
+                        </Paper>
+                    )
+                )}
+            </Grid>
+        </Grid>
+    </Grid>
 )
 
-export default PokemonList
+export default withStyles(styles)(PokemonList)

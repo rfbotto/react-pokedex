@@ -7,16 +7,15 @@ const PokemonListWrapper: React.FC = React.memo(() => {
     const [pokemonList, setPokemonList] = useState({ results: [] } as PL)
 
     const fetchData = async () => {
-        const response = await getPokemonList()
-        const data = await response.json() as PL
-        setPokemonList(data)
+        const pokemons = await getPokemonList() as PL
+        setPokemonList(pokemons)
     }
 
     useEffect(() => {
         fetchData()
     }, []);
 
-    return <PokemonList pokemons={pokemonList.results.splice(0, pokemonList.results.length - 57)} />
+    return <PokemonList pokemons={pokemonList.results} />
 })
 
 export default PokemonListWrapper

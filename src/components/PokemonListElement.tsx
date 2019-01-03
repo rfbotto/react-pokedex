@@ -4,6 +4,7 @@ import { PokedexContext } from './Pokedex';
 import { getPokemonById } from '../api/getPokemon';
 import { CircularProgress, Grid, withStyles } from '@material-ui/core';
 import { Classes } from 'jss';
+import SuspendedImage from './SuspendedImage';
 
 interface Props {
     pokemon: Pokemon
@@ -24,10 +25,8 @@ const PokemonListElement: React.FC<Props> = React.memo(({ pokemon, classes }) =>
     const { setSelectedPokemonId } = useContext(PokedexContext) as PContext
     const [pokemonData, setSelectedPokemonData] = useState({} as PokemonDetail)
 
-    const pokemonId = parseInt(pokemon.url.split('/')[6])
-
     const fetchPokemonData = async () => {
-        const response = await getPokemonById(pokemonId)
+        const response = await getPokemonById(pokemon.id)
         const data = await response.json()
         setSelectedPokemonData(data)
     }
@@ -37,13 +36,13 @@ const PokemonListElement: React.FC<Props> = React.memo(({ pokemon, classes }) =>
     }, []);
 
     return (
-        <Grid onClick={() => setSelectedPokemonId(pokemonId)} className={classes.container}>
-            {pokemonData.sprites ? (
-                <>
-                    <img src={pokemonData.sprites.front_default} />
-                    <h3 key={pokemonId}>{pokemon.name}</h3>
-                </>
-            ) : <CircularProgress />}
+        <Grid onClick={() => setSelectedPokemonId(pokemon.id)} className={classes.container}>
+            {pokemonData.sprites && (
+                <React.Suspense fallback={<CircularProgress />}>
+                    <SuspendedImage src={pokemonData.sprites.front_default} />
+                    <h3 key={pokemon.id}>{pokemon.name}</h3>
+                </React.Suspense>
+            )}
         </Grid>
     )
 

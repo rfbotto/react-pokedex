@@ -22,7 +22,7 @@ const styles = () => ({
 })
 
 const PokemonListElement: React.FC<Props> = React.memo(({ pokemon, classes }) => {
-    const { setSelectedPokemonId } = useContext(PokedexContext) as PContext
+    const { setSelectedPokemon } = useContext(PokedexContext) as PContext
     const [pokemonData, setSelectedPokemonData] = useState({} as PokemonDetail)
 
     const fetchPokemonData = async () => {
@@ -36,7 +36,7 @@ const PokemonListElement: React.FC<Props> = React.memo(({ pokemon, classes }) =>
     }, []);
 
     return (
-        <Grid onClick={() => setSelectedPokemonId(pokemon.id)} className={classes.container}>
+        <Grid onClick={() => setSelectedPokemon(pokemon)} className={classes.container}>
             {pokemonData.sprites && (
                 <React.Suspense fallback={<CircularProgress />}>
                     <SuspendedImage src={pokemonData.sprites.front_default} />

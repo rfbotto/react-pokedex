@@ -27,7 +27,7 @@ const PokemonList: React.FC<Props> = ({ pokemons, classes }) => (
             <Grid container justify="center" spacing={16}>
                 {pokemons.map(
                     pokemon => (
-                        <Paper key={pokemon.name} className={classes.paper}>
+                        <Paper key={pokemon.id} className={classes.paper}>
                             <LazyLoad height={200}>
                                 <PokemonListElement pokemon={pokemon} />
                             </LazyLoad>

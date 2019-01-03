@@ -1,6 +1,6 @@
 import { Pokemon } from './../types/Pokemon';
 
-const NUMBER_OF_POKEMONS_TO_REMOVE = 57
+const NUMBER_OF_POKEMONS_TO_REMOVE = 147
 
 export const getPokemonList = () => fetch("https://pokeapi.co/api/v2/pokemon/")
     .then(res => res.json())

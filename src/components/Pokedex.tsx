@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import PokemonListWrapper from './PokemonListWrapper'
 import { Pokemon } from '../types/Pokemon';
+import { CircularProgress } from '@material-ui/core';
+
+const PokemonDetail = React.lazy(() => import('./PokemonDetail'));
 
 export const PokedexContext = React.createContext({})
 
@@ -9,8 +12,10 @@ const Pokedex: React.SFC = () => {
 
     return (
         <PokedexContext.Provider value={{ setSelectedPokemon }}>
-            <h3 style={{ textAlign: 'center' }}>Selected Pokemon ID: {selectedPokemon ? selectedPokemon.id : 'None'}</h3>
-            <PokemonListWrapper />
+            <React.Suspense fallback={<CircularProgress />}>
+                {selectedPokemon.id && <PokemonDetail pokemon={selectedPokemon} />}
+                <PokemonListWrapper />
+            </React.Suspense>
         </PokedexContext.Provider>
     )
 }

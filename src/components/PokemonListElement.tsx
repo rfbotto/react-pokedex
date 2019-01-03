@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react'
 import { Pokemon, PokedexContext as PContext, PokemonDetail } from '../types/Pokemon';
 import { PokedexContext } from './Pokedex';
 import { getPokemonById } from '../api/getPokemon';
-import { CircularProgress, Grid, withStyles } from '@material-ui/core';
+import { CircularProgress, Grid, withStyles, Typography } from '@material-ui/core';
 import { Classes } from 'jss';
 import SuspendedImage from './SuspendedImage';
 
@@ -40,7 +40,7 @@ const PokemonListElement: React.FC<Props> = React.memo(({ pokemon, classes }) =>
             {pokemonData.sprites && (
                 <React.Suspense fallback={<CircularProgress />}>
                     <SuspendedImage src={pokemonData.sprites.front_default} />
-                    <h3 key={pokemon.id}>{pokemon.name}</h3>
+                    <Typography component="h6" variant="h6" key={pokemon.id}>{pokemon.name}</Typography>
                 </React.Suspense>
             )}
         </Grid>

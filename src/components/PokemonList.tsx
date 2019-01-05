@@ -7,7 +7,7 @@ import { Classes } from 'jss';
 import LazyLoad from 'react-lazyload';
 import { SearchContext } from './Pokedex';
 import { forceCheck } from 'react-lazyload';
-import { filterPokemonList } from '../utils/filterPokemonList';
+import { filterPokemonList } from '../utils/utils';
 
 interface Props {
     pokemons: Array<PokemonType>

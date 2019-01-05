@@ -6,6 +6,8 @@ import { CircularProgress, Grid, withStyles, Typography, Paper, Theme } from '@m
 import { Classes } from 'jss';
 import SuspendedImage from './SuspendedImage';
 import { unstable_createResource } from 'react-cache';
+import { formatWeight, formatHeight } from '../utils/utils';
+import { typeColorMapping } from '../design/typeColorMapping';
 
 interface Props {
     pokemon: Pokemon
@@ -17,7 +19,7 @@ const styles = (theme: Theme) => ({
         height: '100%',
     },
     type: {
-        padding: theme.spacing.unit
+        padding: theme.spacing.unit,
     },
     pokemonName: {
         textTransform: 'capitalize',
@@ -25,7 +27,11 @@ const styles = (theme: Theme) => ({
     },
     pokemonCharacteristics: {
         textAlign: 'left'
-    }
+    },
+    pokemonTypeText: {
+        color: 'white'
+    },
+    ...typeColorMapping
 })
 
 const PokemonDataResource = unstable_createResource((id: number) =>
@@ -48,20 +54,20 @@ const PokemonListElement: React.FC<Props> = React.memo(({ pokemon, classes }) =>
                         <Grid item className={classes.pokemonCharacteristics}>
                             <Grid item>
                                 <b>Height</b>
-                                <Typography variant="body1" >{pokemonDetail.height}m</Typography>
+                                <Typography variant="body1" >{formatHeight(pokemonDetail.height)} cm</Typography>
                             </Grid>
                             <br />
                             <Grid item>
                                 <b>Weight</b>
-                                <Typography variant="body1">{pokemonDetail.weight}kg</Typography>
+                                <Typography variant="body1">{formatWeight(pokemonDetail.weight)} kg</Typography>
                             </Grid>
                         </Grid>
                     </Grid>
                     <Grid item container justify="flex-end" spacing={8}>
                         {pokemonDetail.types.map(({ type }) =>
                             <Grid item key={`${pokemon.name}-${type.name}`} >
-                                <Paper className={classes.type}>
-                                    <Typography variant="body1">{type.name}</Typography>
+                                <Paper className={`${classes.type} ${classes[type.name]}`}>
+                                    <Typography variant="body1" className={classes.pokemonTypeText}>{type.name}</Typography>
                                 </Paper>
                             </Grid>
                         )}

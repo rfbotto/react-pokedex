@@ -10,7 +10,7 @@ interface Props {
 
 const styles = (theme: Theme) => ({
     input: {
-        margin: theme.spacing.unit * 2,
+        margin: theme.spacing.unit * 4,
         width: 300
     },
 })

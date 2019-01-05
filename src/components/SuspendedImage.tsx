@@ -14,9 +14,9 @@ const ImageResource = unstable_createResource((src: string) => (
     })
 ))
 
-const SuspendedImage: React.FC<Props> = ({ src, alt }) => (
+const SuspendedImage: React.FC<Props> = ({ src, alt, ...rest }) => (
     //@ts-ignore
-    <img src={ImageResource.read(src)} alt={alt} />
+    <img src={ImageResource.read(src)} alt={alt} {...rest} />
 )
 
 export default SuspendedImage

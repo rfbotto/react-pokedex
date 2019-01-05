@@ -1,13 +1,14 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { Pokemon, PokedexContext as PContext, PokemonDetail } from '../types/Pokemon';
 import { PokedexContext } from './Pokedex';
 import { getPokemonById } from '../api/getPokemon';
-import { CircularProgress, Grid, withStyles, Typography, Paper, Theme } from '@material-ui/core';
+import { CircularProgress, Grid, withStyles, Typography, Paper, Theme, Tooltip } from '@material-ui/core';
 import { Classes } from 'jss';
 import SuspendedImage from './SuspendedImage';
 import { unstable_createResource } from 'react-cache';
-import { formatWeight, formatHeight } from '../utils/utils';
+import { formatWeight, formatHeight, getGenerationById } from '../utils/utils';
 import { typeColorMapping } from '../design/typeColorMapping';
+import { generationColorMapping } from '../design/generationColorMapping';
 
 interface Props {
     pokemon: Pokemon
@@ -31,7 +32,13 @@ const styles = (theme: Theme) => ({
     pokemonTypeText: {
         color: 'white'
     },
-    ...typeColorMapping
+    generationTooltip: {
+        borderRadius: theme.spacing.unit * 2,
+        padding: theme.spacing.unit,
+        margin: theme.spacing.unit
+    },
+    ...typeColorMapping,
+    ...generationColorMapping
 })
 
 const PokemonDataResource = unstable_createResource((id: number) =>
@@ -41,12 +48,30 @@ const PokemonDataResource = unstable_createResource((id: number) =>
 const PokemonListElement: React.FC<Props> = React.memo(({ pokemon, classes }) => {
     const { setSelectedPokemon } = useContext(PokedexContext) as PContext
     const pokemonDetail = PokemonDataResource.read(pokemon.id) as PokemonDetail
+    const pokemonGeneration = getGenerationById(pokemon.id)
 
     return (
-        <Grid item container justify="center" direction="column" alignItems="center" spacing={16} className={classes.container} onClick={() => setSelectedPokemon(pokemonDetail)}>
+        <Grid
+            item
+            container
+            justify="center"
+            direction="column"
+            alignItems="center"
+            spacing={16}
+            className={classes.container}
+            onClick={() => setSelectedPokemon(pokemonDetail)}>
             {pokemonDetail.sprites && (
                 <React.Suspense fallback={<CircularProgress />}>
-                    <Typography variant="h5" gutterBottom className={classes.pokemonName}>{pokemon.name}</Typography>
+                    <Grid item container justify="center">
+                        <Grid item>
+                            <Typography variant="h5" gutterBottom className={classes.pokemonName}>{pokemon.name}</Typography>
+                        </Grid>
+                        <Grid item>
+                            <Tooltip title={`Generation ${pokemonGeneration}`}>
+                                <div className={`${classes.generationTooltip} ${classes[pokemonGeneration]}`} />
+                            </Tooltip>
+                        </Grid>
+                    </Grid>
                     <Grid item container justify="space-between">
                         <Grid item>
                             <SuspendedImage src={pokemonDetail.sprites.front_default} />

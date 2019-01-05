@@ -16,19 +16,15 @@ interface Props {
 
 const styles = (theme: Theme) => ({
     paper: {
-        height: 210,
+        height: 260,
         width: 250,
         padding: theme.spacing.unit * 2,
         textAlign: 'center',
-        '&:hover': {
-            backgroundColor: theme.palette.primary.light
-        }
     },
 })
 
 const PokemonList: React.FC<Props> = React.memo(({ pokemons, classes }) => {
     const searchTerm = useContext(SearchContext)
-
     const filteredPokemons = filterPokemonList(pokemons, searchTerm)
 
     useEffect(() => {
@@ -42,7 +38,7 @@ const PokemonList: React.FC<Props> = React.memo(({ pokemons, classes }) => {
                     <Grid item key={pokemon.id}>
                         <Paper className={classes.paper}>
                             <React.Suspense fallback={<CircularProgress />}>
-                                <LazyLoad height={200} once>
+                                <LazyLoad height={260} once>
                                     <PokemonListElement pokemon={pokemon} />
                                 </LazyLoad>
                             </React.Suspense>

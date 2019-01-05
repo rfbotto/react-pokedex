@@ -16,7 +16,7 @@ interface Props {
 
 const styles = (theme: Theme) => ({
     paper: {
-        height: 200,
+        height: 210,
         width: 250,
         padding: theme.spacing.unit * 2,
         textAlign: 'center',

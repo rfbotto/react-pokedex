@@ -9,7 +9,7 @@ export interface PokemonList {
 }
 
 export interface PokedexContext {
-    setSelectedPokemon: (pokemon: Pokemon) => void
+    setSelectedPokemon: (pokemon: PokemonDetail) => void
 }
 
 export interface PokemonDetail {

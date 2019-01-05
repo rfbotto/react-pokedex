@@ -13,11 +13,7 @@ interface Props {
 
 const styles = () => ({
     container: {
-        display: 'flex',
-        alignItems: 'center',
-        flexDirection: 'column',
         height: '100%',
-        justifyContent: 'center',
     }
 })
 
@@ -36,13 +32,15 @@ const PokemonListElement: React.FC<Props> = React.memo(({ pokemon, classes }) =>
     }, []);
 
     return (
-        <Grid onClick={() => setSelectedPokemon(pokemon)} className={classes.container}>
-            {pokemonData.sprites && (
-                <React.Suspense fallback={<CircularProgress />}>
-                    <SuspendedImage src={pokemonData.sprites.front_default} />
-                    <Typography component="h6" variant="h6" key={pokemon.id}>{pokemon.name}</Typography>
-                </React.Suspense>
-            )}
+        <Grid container justify="center" direction="column" alignItems="center" spacing={16} className={classes.container}>
+            <Grid item onClick={() => setSelectedPokemon(pokemonData)}>
+                {pokemonData.sprites && (
+                    <React.Suspense fallback={<CircularProgress />}>
+                        <SuspendedImage src={pokemonData.sprites.front_default} />
+                        <Typography component="h6" variant="h6" key={pokemon.id}>{pokemon.name}</Typography>
+                    </React.Suspense>
+                )}
+            </Grid>
         </Grid>
     )
 

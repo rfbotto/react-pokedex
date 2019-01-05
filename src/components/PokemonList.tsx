@@ -2,11 +2,12 @@ import React, { useContext, useEffect } from 'react'
 import { Pokemon as PokemonType } from '../types/Pokemon';
 import PokemonListElement from './PokemonListElement';
 import Grid from '@material-ui/core/Grid';
-import { withStyles, Paper, Theme } from '@material-ui/core';
+import { withStyles, Paper, Theme, CircularProgress } from '@material-ui/core';
 import { Classes } from 'jss';
 import LazyLoad from 'react-lazyload';
 import { SearchContext } from './Pokedex';
 import { forceCheck } from 'react-lazyload';
+import { filterPokemonList } from '../utils/filterPokemonList';
 
 interface Props {
     pokemons: Array<PokemonType>
@@ -20,7 +21,7 @@ const styles = (theme: Theme) => ({
         padding: theme.spacing.unit * 2,
         textAlign: 'center',
         '&:hover': {
-            backgroundColor: '#41D3BD'
+            backgroundColor: theme.palette.primary.light
         }
     },
 })
@@ -28,9 +29,7 @@ const styles = (theme: Theme) => ({
 const PokemonList: React.FC<Props> = React.memo(({ pokemons, classes }) => {
     const searchTerm = useContext(SearchContext)
 
-    const filteredPokemons = searchTerm ? pokemons.filter(pokemon =>
-        pokemon.name.toLowerCase().includes(searchTerm.toLowerCase())
-    ) : pokemons
+    const filteredPokemons = filterPokemonList(pokemons, searchTerm)
 
     useEffect(() => {
         forceCheck()
@@ -42,14 +41,16 @@ const PokemonList: React.FC<Props> = React.memo(({ pokemons, classes }) => {
                 pokemon => (
                     <Grid item key={pokemon.id}>
                         <Paper className={classes.paper}>
-                            <LazyLoad height={200} once>
-                                <PokemonListElement pokemon={pokemon} />
-                            </LazyLoad>
+                            <React.Suspense fallback={<CircularProgress />}>
+                                <LazyLoad height={200} once>
+                                    <PokemonListElement pokemon={pokemon} />
+                                </LazyLoad>
+                            </React.Suspense>
                         </Paper>
                     </Grid>
                 )
             )}
-        </Grid>
+        </Grid >
     )
 })
 

@@ -7,7 +7,6 @@ interface Props {
 }
 
 const SelectedPokemon: React.FC<Props> = ({ pokemon }) => {
-    console.log(pokemon)
     return (
         <Typography component="h5" variant="h5" align="center" gutterBottom>Selected Pokemon: {pokemon.species.name}</Typography>
     )

@@ -1,20 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { getPokemonList } from '../api/getPokemonList';
-import { PokemonList as PL } from '../types/Pokemon';
 import PokemonList from './PokemonList';
+import { unstable_createResource } from 'react-cache';
+
+const PokemonListResource = unstable_createResource(() => getPokemonList())
 
 const PokemonListWrapper: React.FC = React.memo(() => {
-    const [pokemonList, setPokemonList] = useState({ results: [] } as PL)
-
-    const fetchData = async () => {
-        const pokemons = await getPokemonList() as PL
-        setPokemonList(pokemons)
-    }
-
-    useEffect(() => {
-        fetchData()
-    }, []);
-
+    const pokemonList = PokemonListResource.read('pokemon-list')
     return <PokemonList pokemons={pokemonList.results} />
 })
 

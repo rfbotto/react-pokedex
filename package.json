@@ -11,9 +11,9 @@
     "@types/react-dom": "^16.0.11",
     "@types/react-lazyload": "^2.3.1",
     "jss": "^10.0.0-alpha.3",
-    "react": "^16.7.0-alpha.2",
+    "react": "^16.8.0-alpha.1",
     "react-cache": "^2.0.0-alpha.1",
-    "react-dom": "^16.7.0-alpha.2",
+    "react-dom": "^16.8.0-alpha.1",
     "react-lazyload": "^2.3.0",
     "react-scripts": "2.1.1",
     "typescript": "^3.2.1"
